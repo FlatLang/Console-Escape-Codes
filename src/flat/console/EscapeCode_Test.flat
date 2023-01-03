@@ -1,0 +1,11 @@
+package flat/console
+
+import flat/console/EscapeCode
+
+testable class {
+  test `can create`() {
+    let value = EscapeCode()
+
+    expect(value).toNotBe(null)
+  }
+}
