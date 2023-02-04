@@ -106,6 +106,8 @@ class {
   public static eraseEntireLine() => "#{ESCAPE}#{ERASE_ENTIRE_LINE}"
 
   public static visibleCount(String s) -> Int {
+    if (s.count <= ESCAPE.count + 1) return s.count
+
     let iterator = EscapeCodeIterator(s)
     var count = s.count
 
