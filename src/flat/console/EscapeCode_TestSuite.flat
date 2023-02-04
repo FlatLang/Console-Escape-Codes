@@ -4,10 +4,10 @@ import flat/test/TestResult
 
 import flat/time/Timer
 import flat/io/FancyOutputStream
-import flat/console/EscapeCode
 
 [TestSuite [
-  EscapeCode_Test
+  EscapeCode_Test,
+  EscapeCodeIterator_Test
 ]]
 class {
   public static async main(String[] args) {
