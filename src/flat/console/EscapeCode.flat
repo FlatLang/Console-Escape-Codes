@@ -104,4 +104,16 @@ class {
   public static eraseFromCursorToEndOfLine() => "#{ESCAPE}#{ERASE_FROM_CURSOR_TO_END_OF_LINE}"
   public static eraseFromCursorToBeginningOfLine() => "#{ESCAPE}#{ERASE_FROM_CURSOR_TO_BEGINNING_OF_LINE}"
   public static eraseEntireLine() => "#{ESCAPE}#{ERASE_ENTIRE_LINE}"
+
+  public static visibleCount(String s) -> Int {
+    let iterator = EscapeCodeIterator(s)
+    var count = s.count
+
+    while (iterator.hasNext) {
+      iterator.stepNext
+      count -= iterator.positionEnd - iterator.position
+    }
+
+    return count
+  }
 }

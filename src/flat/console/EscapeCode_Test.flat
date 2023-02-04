@@ -1,11 +1,50 @@
 package flat/console
 
-import flat/console/EscapeCode
-
 testable class {
-  test `can create`() {
-    let value = EscapeCode()
+  test `visibleCount can get count of string without any escape codes`() {
+    let str = "aoeuaoeu aaahhh!!!oeu aoeuthhtht"
 
-    expect(value).toNotBe(null)
+    expect(EscapeCode.visibleCount(str)).toBe(str.count)
+  }
+
+  test `visibleCount can get count of string with a single RESET escape code`() {
+    let prefix = "aoeuaoeu aaahhh!!!"
+    let suffix = "oeu aoeuthhtht"
+    let str = "#{prefix}#{EscapeCode.ESCAPE}#{EscapeCode.RESET}#{suffix}"
+
+    expect(EscapeCode.visibleCount(str)).toBe(prefix.count + suffix.count)
+  }
+
+  test `visibleCount can get count of string with a multiple RESET escape codes in between normal text with no normal text in between the escape codes`() {
+    let prefix = "aoeuaoeu aaahhh!!!"
+    let suffix = "oeu aoeuthhtht"
+    let str = "#{prefix}#{EscapeCode.ESCAPE}#{EscapeCode.RESET}#{EscapeCode.ESCAPE}#{EscapeCode.RESET}#{suffix}"
+
+    expect(EscapeCode.visibleCount(str)).toBe(prefix.count + suffix.count)
+  }
+
+  test `visibleCount can get count of string with a multiple RESET escape codes in between normal text with normal text in between the escape codes`() {
+    let prefix = "aoeuaoeu aaahhh!!!"
+    let inBetween = "hey there"
+    let suffix = "oeu aoeuthhtht"
+    let str = "#{prefix}#{EscapeCode.ESCAPE}#{EscapeCode.RESET}#{inBetween}#{EscapeCode.ESCAPE}#{EscapeCode.RESET}#{suffix}"
+
+    expect(EscapeCode.visibleCount(str)).toBe(prefix.count + inBetween.count + suffix.count)
+  }
+
+  test `visibleCount can get count of string with a variable escape codes in between normal text with normal text in between the escape codes`() {
+    let prefix = "aoeuaoeu aaahhh!!!"
+    let inBetween = "hey there"
+    let suffix = "oeu aoeuthhtht"
+
+    let r = 30
+    let g = 200
+    let b = 5
+
+    let rgbCode = EscapeCode.ESCAPE + EscapeCode.RGB_FOREGROUND_PREFIX + "#{r};#{g};#{b}" + EscapeCode.MODE_SUFFIX
+
+    let str = "#{prefix}#{rgbCode}#{inBetween}#{EscapeCode.ESCAPE}#{EscapeCode.RESET}#{suffix}"
+
+    expect(EscapeCode.visibleCount(str)).toBe(prefix.count + inBetween.count + suffix.count)
   }
 }
