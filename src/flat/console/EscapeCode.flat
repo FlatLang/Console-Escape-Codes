@@ -118,4 +118,22 @@ class {
 
     return count
   }
+
+  public static visibleSubstring(String s, Int start = 0, Int end = s.count) -> String {
+    if (s.count <= ESCAPE.count + 1) return s.substring(start, end)
+
+    let iterator = EscapeCodeIterator(s)
+    var Int startWithOffset = start
+    var Int endWithOffset = end
+
+    while (iterator.hasNext) {
+      iterator.stepNext
+
+      if (start >= iterator.position) startWithOffset += iterator.positionEnd - iterator.position
+      if (end >= iterator.position) endWithOffset += iterator.positionEnd - iterator.position
+      else break
+    }
+
+    return s.substring(startWithOffset, endWithOffset)
+  }
 }
