@@ -153,7 +153,7 @@ class implements Iterator<Int> {
 
     if (string.count < start + escapeCode.count) return -1
 
-    for (var Int i = 0; i < escapeCode.count; i++) {
+    for (i in 0..escapeCode.count) {
       if (string[start + i] != escapeCode[i]) break
       if (i == escapeCode.count - 1) return start + i + 1
     }
@@ -164,7 +164,7 @@ class implements Iterator<Int> {
 
     if (string.count < start + prefix.count) return -1
 
-    for (var Int i = 0; i < prefix.count; i++) {
+    for (i in 0..prefix.count) {
       if (string[start + i] != prefix[i]) return -1
     }
 
@@ -180,7 +180,7 @@ class implements Iterator<Int> {
       break
     }
 
-    for (var Int i = 0; i < suffix.count; i++) {
+    for (i in 0..suffix.count) {
       if (variableEndIndex + i >= string.count) return -1
       if (string[variableEndIndex + i] != suffix[i]) return -1
     }
