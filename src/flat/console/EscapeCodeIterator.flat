@@ -68,6 +68,10 @@ class implements Iterator<Int> {
   visible String previousCode => prevPosition != -1 ? string.substring(prevPosition, prevPositionEnd) : null
   visible String nextCode => hasNext ? string.substring(nextPosition, nextPositionEnd) : null
 
+  visible Int codeCount => position != -1 ? positionEnd - position : -1
+  visible Int previousCodeCount => prevPosition != -1 ? prevPositionEnd - prevPosition : -1
+  visible Int nextCodeCount => hasNext ? nextPositionEnd - positionEnd : -1
+
   static lazy String[] EXACT_ESCAPE_CODES => [
     EscapeCode.RESET,
     EscapeCode.BRIGHT,
