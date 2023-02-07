@@ -64,7 +64,7 @@ class implements Iterator<Int> {
   visible Int previous => prevPosition
   visible Int next => hasNext ? nextPosition : -1
 
-  visible String currentCode => position != -1 ? string.substring(position, positionEnd) : null
+  visible String code => position != -1 ? string.substring(position, positionEnd) : null
   visible String previousCode => prevPosition != -1 ? string.substring(prevPosition, prevPositionEnd) : null
   visible String nextCode => hasNext ? string.substring(nextPosition, nextPositionEnd) : null
 

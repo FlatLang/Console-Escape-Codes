@@ -9,7 +9,7 @@ testable class {
     expect(iterator.stepNext).toBe(0)
     expect(iterator.position).toBe(0)
     expect(iterator.positionEnd).toBe(EscapeCode.ESCAPE.count + EscapeCode.RESET.count)
-    expect(iterator.currentCode).toBe(EscapeCode.ESCAPE + EscapeCode.RESET)
+    expect(iterator.code).toBe(EscapeCode.ESCAPE + EscapeCode.RESET)
     expect(iterator.hasNext).toBe(false, "hasNext should be false")
   }
 
@@ -21,7 +21,7 @@ testable class {
     expect(iterator.stepNext).toBe(3)
     expect(iterator.position).toBe(3)
     expect(iterator.positionEnd).toBe(3 + EscapeCode.ESCAPE.count + EscapeCode.RESET.count)
-    expect(iterator.currentCode).toBe(EscapeCode.ESCAPE + EscapeCode.RESET)
+    expect(iterator.code).toBe(EscapeCode.ESCAPE + EscapeCode.RESET)
     expect(iterator.hasNext).toBe(false, "hasNext should be false")
   }
 
@@ -33,7 +33,7 @@ testable class {
     expect(iterator.stepNext).toBe(3)
     expect(iterator.position).toBe(3)
     expect(iterator.positionEnd).toBe(3 + EscapeCode.ESCAPE.count + EscapeCode.RESET.count)
-    expect(iterator.currentCode).toBe(EscapeCode.ESCAPE + EscapeCode.RESET)
+    expect(iterator.code).toBe(EscapeCode.ESCAPE + EscapeCode.RESET)
     expect(iterator.hasNext).toBe(false, "hasNext should be false")
   }
 
@@ -45,13 +45,13 @@ testable class {
     expect(iterator.stepNext).toBe(0)
     expect(iterator.position).toBe(0)
     expect(iterator.positionEnd).toBe(0 + EscapeCode.ESCAPE.count + EscapeCode.RESET.count)
-    expect(iterator.currentCode).toBe(EscapeCode.ESCAPE + EscapeCode.RESET)
+    expect(iterator.code).toBe(EscapeCode.ESCAPE + EscapeCode.RESET)
     expect(iterator.hasNext).toBe(true, "second hasNext should be true")
     expect(iterator.next).toBe(EscapeCode.ESCAPE.count + EscapeCode.RESET.count)
     expect(iterator.stepNext).toBe(EscapeCode.ESCAPE.count + EscapeCode.RESET.count)
     expect(iterator.position).toBe(EscapeCode.ESCAPE.count + EscapeCode.RESET.count)
     expect(iterator.positionEnd).toBe(EscapeCode.ESCAPE.count + EscapeCode.RESET.count + EscapeCode.ESCAPE.count + EscapeCode.RESET.count)
-    expect(iterator.currentCode).toBe(EscapeCode.ESCAPE + EscapeCode.RESET)
+    expect(iterator.code).toBe(EscapeCode.ESCAPE + EscapeCode.RESET)
     expect(iterator.hasNext).toBe(false, "third hasNext should be false")
   }
 
@@ -63,13 +63,13 @@ testable class {
     expect(iterator.stepNext).toBe(0)
     expect(iterator.position).toBe(0)
     expect(iterator.positionEnd).toBe(0 + EscapeCode.ESCAPE.count + EscapeCode.RESET.count)
-    expect(iterator.currentCode).toBe(EscapeCode.ESCAPE + EscapeCode.RESET)
+    expect(iterator.code).toBe(EscapeCode.ESCAPE + EscapeCode.RESET)
     expect(iterator.hasNext).toBe(true, "second hasNext should be true")
     expect(iterator.next).toBe(EscapeCode.ESCAPE.count + EscapeCode.RESET.count)
     expect(iterator.stepNext).toBe(EscapeCode.ESCAPE.count + EscapeCode.RESET.count)
     expect(iterator.position).toBe(EscapeCode.ESCAPE.count + EscapeCode.RESET.count)
     expect(iterator.positionEnd).toBe(EscapeCode.ESCAPE.count + EscapeCode.RESET.count + EscapeCode.ESCAPE.count + EscapeCode.DIM.count)
-    expect(iterator.currentCode).toBe(EscapeCode.ESCAPE + EscapeCode.DIM)
+    expect(iterator.code).toBe(EscapeCode.ESCAPE + EscapeCode.DIM)
     expect(iterator.hasNext).toBe(false, "third hasNext should be false")
   }
 
@@ -87,7 +87,7 @@ testable class {
     expect(iterator.stepNext).toBe(0)
     expect(iterator.position).toBe(0)
     expect(iterator.positionEnd).toBe(code.count)
-    expect(iterator.currentCode).toBe(code)
+    expect(iterator.code).toBe(code)
     expect(iterator.hasNext).toBe(false, "hasNext should be false")
   }
 
@@ -117,13 +117,13 @@ testable class {
     expect(iterator.stepNext).toBe(0)
     expect(iterator.position).toBe(0)
     expect(iterator.positionEnd).toBe(0 + firstCode.count)
-    expect(iterator.currentCode).toBe(firstCode)
+    expect(iterator.code).toBe(firstCode)
     expect(iterator.hasNext).toBe(true, "second hasNext should be true")
     expect(iterator.next).toBe(firstCode.count + normalText.count)
     expect(iterator.stepNext).toBe(firstCode.count + normalText.count)
     expect(iterator.position).toBe(firstCode.count + normalText.count)
     expect(iterator.positionEnd).toBe(string.count)
-    expect(iterator.currentCode).toBe(secondCode)
+    expect(iterator.code).toBe(secondCode)
     expect(iterator.hasNext).toBe(false, "third hasNext should be false")
   }
 }
