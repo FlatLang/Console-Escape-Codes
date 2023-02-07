@@ -119,64 +119,76 @@ class {
     return count
   }
 
-  public static visibleSubstring(String s, Int start = 0, Int end = s.count) -> String {
+  public static visibleSubstring(
+    String s,
+    var Int start = 0,
+    var Int end = visibleCount(s)
+  ) -> String {
     if (s.count <= ESCAPE.count + 1) return s.substring(start, end)
 
     let iterator = EscapeCodeIterator(s)
-    var Int startWithOffset = start
-    var Int endWithOffset = end
 
     while (iterator.hasNext) {
       iterator.stepNext
 
-      if (start >= iterator.position) startWithOffset += iterator.positionEnd - iterator.position
-      if (end >= iterator.position) endWithOffset += iterator.positionEnd - iterator.position
+      if (start >= iterator.position) start += iterator.codeCount
+      if (end >= iterator.position) end += iterator.codeCount
       else break
     }
 
-    return s.substring(startWithOffset, endWithOffset)
+    return s.substring(start, end)
   }
 
   public static wrapLine(
     String value,
     Int lineLength,
     String indentation = "",
-    Bool breakWord = true
+    Bool breakWord = false
   ) -> String[] {
+    if (value.count <= lineLength) return [value]
+
     let vCount = visibleCount(value)
     if (vCount <= lineLength) return [value]
 
-    var Int offset = 0
-
-    if (breakWord && vCount > lineLength) {
-      let nextChar = visibleSubstring(value, lineLength, lineLength + 1)[0]
-      var whitespace = false
-
-      match nextChar {
-        ' ' => '\n' => '\t' => '\r' => whitespace = true
-      }
-
-      if (!whitespace) {
-        while (offset < lineLength) {
-          let endChar = visibleSubstring(value, lineLength - 1 - offset, lineLength - offset)[0]
-
-          match endChar {
-            ' ' => '\n' => '\t' => '\r' => break
-            default => {
-              offset++
-              continue
-            }
-          }
-
-          break
-        }
-      }
-    }
+    let offset = breakWord
+      ? 0
+      : findBreakWordOffset(value, vCount, lineLength)
 
     let line = visibleSubstring(value, 0, lineLength - offset)
     let remainder = indentation + visibleSubstring(value, lineLength - offset).trim()
     let lines = [line]
 
     return lines:addAll(wrapLine(remainder, lineLength, indentation))
+  }
+
+  static findBreakWordOffset(String value, Int vCount, Int lineLength) -> Int {
+    if (vCount <= lineLength) return 0
+
+    var Int offset = 0
+
+    let nextChar = visibleSubstring(value, lineLength, lineLength + 1)[0]
+    var whitespace = false
+
+    match nextChar {
+      ' ' => '\n' => '\t' => '\r' => whitespace = true
+    }
+
+    if (!whitespace) {
+      while (offset < lineLength) {
+        let endChar = visibleSubstring(value, lineLength - 1 - offset, lineLength - offset)[0]
+
+        match endChar {
+          ' ' => '\n' => '\t' => '\r' => break
+          default => {
+            offset++
+            continue
+          }
+        }
+
+        break
+      }
+    }
+
+    return offset
   }
 }

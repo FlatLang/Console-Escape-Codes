@@ -47,4 +47,42 @@ testable class {
 
     expect(EscapeCode.visibleCount(str)).toBe(prefix.count + inBetween.count + suffix.count)
   }
+
+  test `visibleSubstring can get substring for string with escape codes`() {
+    let rgbCode = "#{EscapeCode.ESCAPE}#{EscapeCode.RGB_FOREGROUND_PREFIX}30;200;5#{EscapeCode.MODE_SUFFIX}"
+    let resetCode = "#{EscapeCode.ESCAPE}#{EscapeCode.RESET}"
+    let word = "a".repeat(20)
+
+    let str = "[#{rgbCode}#{word}#{resetCode}, #{rgbCode}#{word}#{resetCode}]"
+
+    expect(EscapeCode.visibleSubstring(str, 0, 30)).toBe(
+      "[#{rgbCode}aaaaaaaaaaaaaaaaaaaa#{resetCode}, #{rgbCode}aaaaaaa"
+    )
+  }
+
+  test `wrapLine does not wrap when count is less than lineLength with breakWord false`() {
+    let rgbCode = "#{EscapeCode.ESCAPE}#{EscapeCode.RGB_FOREGROUND_PREFIX}30;200;5#{EscapeCode.MODE_SUFFIX}"
+    let resetCode = "#{EscapeCode.ESCAPE}#{EscapeCode.RESET}"
+    let word = "a".repeat(20)
+
+    let str = "[#{rgbCode}#{word}#{resetCode}, #{rgbCode}#{word}#{resetCode}]"
+
+    expect(EscapeCode.wrapLine(str, 30, breakWord: false)).toBe([
+      "[#{rgbCode}#{word}#{resetCode}, #{rgbCode}",
+      "#{word}#{resetCode}]",
+    ])
+  }
+
+  test `wrapLine does not wrap when count is less than lineLength with breakWord true`() {
+    let rgbCode = "#{EscapeCode.ESCAPE}#{EscapeCode.RGB_FOREGROUND_PREFIX}30;200;5#{EscapeCode.MODE_SUFFIX}"
+    let resetCode = "#{EscapeCode.ESCAPE}#{EscapeCode.RESET}"
+    let word = "a".repeat(20)
+
+    let str = "[#{rgbCode}#{word}#{resetCode}, #{rgbCode}#{word}#{resetCode}]"
+
+    expect(EscapeCode.wrapLine(str, 30, breakWord: true)).toBe([
+      "[#{rgbCode}aaaaaaaaaaaaaaaaaaaa#{resetCode}, #{rgbCode}aaaaaaa",
+      "aaaaaaaaaaaaa#{resetCode}]",
+    ])
+  }
 }
