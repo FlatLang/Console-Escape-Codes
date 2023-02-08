@@ -85,4 +85,13 @@ testable class {
       "aaaaaaaaaaaaa#{resetCode}]",
     ])
   }
+
+  test `wrapLine wraps when count is one more than lineLength with breakWord false`() {
+    let str = "Specify an explicit flat.json file to reference when running the Airship commands"
+
+    expect(EscapeCode.wrapLine(str, 80, breakWord: false)).toBe([
+      "Specify an explicit flat.json file to reference when running the Airship ",
+      "commands",
+    ])
+  }
 }
