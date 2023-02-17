@@ -167,29 +167,26 @@ class {
     var Int offset = 0
 
     let nextChar = visibleSubstring(value, lineLength, lineLength + 1)[0]
-    var whitespace = false
 
     match nextChar {
-      ' ' => '\n' => '\t' => '\r' => whitespace = true
+      ' ' => '\n' => '\t' => '\r' => return 0
     }
 
-    if (!whitespace) {
-      while (offset < lineLength) {
-        let endChar = visibleSubstring(value, lineLength - 1 - offset, lineLength - offset)[0]
+    while (offset < lineLength) {
+      let endChar = visibleSubstring(value, lineLength - 1 - offset, lineLength - offset)[0]
 
-        match endChar {
-          ' ' => '\n' => '\t' => '\r' => break
-          default => {
-            offset++
-            continue
-          }
+      match endChar {
+        ' ' => '\n' => '\t' => '\r' => break
+        default => {
+          offset++
+          continue
         }
-
-        break
       }
 
-      if (offset == lineLength) return 0
+      break
     }
+
+    if (offset == lineLength) return 0
 
     return offset
   }
