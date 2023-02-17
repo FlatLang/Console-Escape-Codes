@@ -164,30 +164,20 @@ class {
   static findBreakWordOffset(String value, Int vCount, Int lineLength) -> Int {
     if (vCount <= lineLength) return 0
 
-    var Int offset = 0
-
     let nextChar = visibleSubstring(value, lineLength, lineLength + 1)[0]
 
     match nextChar {
       ' ' => '\n' => '\t' => '\r' => return 0
     }
 
-    while (offset < lineLength) {
+    for (offset in 0..lineLength) {
       let endChar = visibleSubstring(value, lineLength - 1 - offset, lineLength - offset)[0]
 
       match endChar {
-        ' ' => '\n' => '\t' => '\r' => break
-        default => {
-          offset++
-          continue
-        }
+        ' ' => '\n' => '\t' => '\r' => return offset
       }
-
-      break
     }
 
-    if (offset == lineLength) return 0
-
-    return offset
+    return 0
   }
 }
