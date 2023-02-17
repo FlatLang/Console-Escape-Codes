@@ -95,7 +95,7 @@ testable class {
     ])
   }
 
-  only test `wrapLine breaks word when word is too long for a single line`() {
+  test `wrapLine breaks word when word is too long for a single line`() {
     let str = "Compiling file .\\src\\flat\\operators\\GreaterThanOrEqualToOperator.flat..."
 
     expect(EscapeCode.wrapLine(str, 55, breakWord: false)).toBe([
