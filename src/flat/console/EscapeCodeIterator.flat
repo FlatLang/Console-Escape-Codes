@@ -139,17 +139,19 @@ class implements Iterator<Int> {
   public construct(private String string) {}
 
   findEscapeCodeEnd(Int index) -> Int => -1 {
-    let exactCodeEnd = EXACT_ESCAPE_CODES.stream()
+    Int default = -1
+
+    Int exactCodeEnd = EXACT_ESCAPE_CODES.stream()
       .map({ findExactEscapeCodeEnd(_, index) })
       .filter({ _ > index })
-      .firstOr(-1)
+      .firstOr(default)
 
     if (exactCodeEnd != -1) return exactCodeEnd
 
     return VARIABLE_ESCAPE_CODES.stream()
       .map({ findVariableEscapeCodeEnd(_x[0], _x[1], index) })
       .filter({ _ > index })
-      .firstOr(-1)
+      .firstOr(default)
   }
 
   findExactEscapeCodeEnd(String escapeCode, Int index) -> Int => -1 {
