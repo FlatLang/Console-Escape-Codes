@@ -47,14 +47,6 @@ jobs:
             ${{ runner.os }}-build-
             ${{ runner.os }}-
 
-      - name: Setup Airship
-        run: |
-          node airship.js setup
-
-      - name: Link Console-Escape-Codes
-        run: |
-          node airship.js reinstall --link
-
       - name: Build Console-Escape-Codes Test
         run: |
           node airship.js install test -t es6
